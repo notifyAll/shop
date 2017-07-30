@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.qgyshop.domain.Categorysecond" table="categorysecond" schema="shop">
+        <id name="csid" column="csid">
+            <generator class="native"></generator>
+        </id>
+        <property name="csname" column="csname"/>
+        <many-to-one name="categoryByCid" class="com.qgyshop.domain.Category">
+            <column name="cid" not-null="true"/>
+        </many-to-one>
+        <set name="productsByCsid" inverse="true" cascade="delete">
+            <key>
+                <column name="csid" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.qgyshop.domain.Product"/>
+        </set>
+    </class>
+</hibernate-mapping>

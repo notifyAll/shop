@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="shop@localhost" uuid="20837aa9-001a-4c57-84ae-a13f65671a9f">
+      <database-info product="MySQL" version="5.5.36" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.40 ( Revision: 402933ef52cad9aa82624e80acbea46e3a701ce6 )">
+        <extra-name-characters>#@</extra-name-characters>
+        <identifier-quote-string>`</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <introspection-schemas>*:shop</introspection-schemas>
+      <resolve-scope>shop:</resolve-scope>
+      <unqualified-resolve-schemas>shop:</unqualified-resolve-schemas>
+    </data-source>
+  </component>
+</project>

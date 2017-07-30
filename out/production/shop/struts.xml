@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <package name="shop" extends="struts-default" namespace="/">
+
+        <!--=======拦截器================拦截器==============拦截器============拦截器==============-->
+        <interceptors>
+            <!--严重管理员是否登录的拦截器-->
+            <interceptor name="adminaccount" class="adminInterceptor"></interceptor>
+            <!--管理员权限的栈-->
+            <interceptor-stack name="adminroot">
+                <!--自定义的栈-->
+                <interceptor-ref name="adminaccount"></interceptor-ref>
+                <!--默认的栈-->
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+        <!--========全局的返回值===============================================================-->
+        <global-results>
+            <result name="nologin">/WEB-INF/adminjsp/index.jsp</result>
+        </global-results>
+        <!--======后台================后台=================后台================后台=============后台===================-->
+        <!--后台首页（就是后台登录界面）-->
+        <action name="adminindex" class="adminIndexAction">
+            <result name="index">/WEB-INF/adminjsp/index.jsp</result>
+        </action>
+        <!--管理员登录和注销-->
+        <action name="admin_*" class="adminAction" method="{1}">
+            <result name="index">/WEB-INF/adminjsp/index.jsp</result>
+            <!--登录成功就去后台主页-->
+            <result name="success" type="redirectAction">adminHomeUi_getHome</result>
+        </action>
+        <!--home主页获取组成其的界面-->
+        <action name="adminHomeUi_*" method="{1}" class="adminGetUiAction">
+            <result name="top">/WEB-INF/adminjsp/top.jsp</result>
+            <result name="left">/WEB-INF/adminjsp/left.jsp</result>
+            <result name="welcome">/WEB-INF/adminjsp/welcome.jsp</result>
+            <result name="bottom">/WEB-INF/adminjsp/bottom.jsp</result>
+            <result name="home">/WEB-INF/adminjsp/home.jsp</result>
+            <interceptor-ref name="adminroot"></interceptor-ref>
+        </action>
+
+        <!--一级分类模块-->
+        <action name="adminCategory_*" class="adminCategoryAction" method="{1}">
+            <result name="findAll">/WEB-INF/adminjsp/category/list.jsp</result>
+            <result name="toFindAll" type="redirectAction">adminCategory_findAll</result>
+            <result name="addUI">/WEB-INF/adminjsp/category/add.jsp</result>
+            <result name="editUI">/WEB-INF/adminjsp/category/edit.jsp</result>
+        </action>
+
+        <!--二级分类-->
+        <action name="adminCategorySecond_*" class="adminCategorySecondAction" method="{1}">
+            <result name="findAll">/WEB-INF/adminjsp/categorysecond/list.jsp</result>
+            <result name="toFindAll" type="redirectAction">
+                <param name="actionName">adminCategorySecond_findAll</param>
+                <param name="namespace">/</param>
+                <param name="page">${page}</param>
+            </result>
+            <result name="toAdd">/WEB-INF/adminjsp/categorysecond/add.jsp</result>
+            <result name="toEdit">/WEB-INF/adminjsp/categorysecond/edit.jsp</result>
+        </action>
+        <!--商品管理-->
+        <action name="adminProduct_*" method="{1}" class="adminProductAction">
+            <result name="findAll" >/WEB-INF/adminjsp/product/list.jsp</result>
+            <result name="toFindAll" type="redirectAction">
+                <param name="actionName">adminProduct_findAll</param>
+                <param name="namespace">/</param>
+                <param name="page">${page}</param>
+            </result>
+            <result name="toAdd">/WEB-INF/adminjsp/product/add.jsp</result>
+            <result name="toEdit">/WEB-INF/adminjsp/product/edit.jsp</result>
+        </action>
+        <!--用户管理 只给予管理员 查看的权限 删除待定  修改添加不允许-->
+        <action name="adminUser_*" class="adminUserAction" method="{1}">
+            <result name="findAll">/WEB-INF/adminjsp/user/list.jsp</result>
+        </action>
+        <!--订单管理-->
+        <action name="adminOrders_*" method="{1}" class="adminOrdersAction">
+            <result name="findAll">/WEB-INF/adminjsp/order/list.jsp</result>
+            <result name="toFindAll" type="redirectAction">adminOrders_findAll</result>
+            <result name="findOrderItem">/WEB-INF/adminjsp/order/orderItem.jsp</result>
+        </action>
+
+        <!--======前台===========前台========前台==========前台==========前台==========前台===========前台=======-->
+
+        <!--访问首页-->
+        <action name="index" class="index">
+            <result>/WEB-INF/userjsp/index.jsp</result>
+        </action>
+        <!--用户登录注册-->
+       <action name="user_*" method="{1}" class="userAction">
+            <result name="loginPage">/WEB-INF/userjsp/login.jsp</result>
+            <result name="toLoginPage" type="redirectAction">user_loginPage</result>
+            <result name="toIndex" type="redirectAction">index</result>
+             <result name="quit">/WEB-INF/userjsp/login.jsp</result>
+             <result name="registPage">/WEB-INF/userjsp/regist.jsp</result>
+             <result name="registSuccess">/WEB-INF/userjsp/login.jsp</result>
+             <result name="checkcodeFail">/WEB-INF/userjsp/regist.jsp</result>
+             <result name="activemsg">/WEB-INF/userjsp/msg.jsp</result>
+             <result name="input">/WEB-INF/userjsp/regist.jsp</result>
+       </action>
+
+        <!--验证码-->
+        <action name="checkImg" class="checkImgAction">
+
+        </action>
+        <!--一级分类查询-->
+
+        <!--二级分类查询-->
+
+        <!--商品查询-->
+        <action name="product_*" class="com.qgyshop.acition.user.ProductAction" method="{1}">
+            <result name="findByPid">/WEB-INF/userjsp/product.jsp</result>
+            <result name="findByCid">/WEB-INF/userjsp/productList.jsp</result>
+            <result name="findByCsid">/WEB-INF/userjsp/productList.jsp</result>
+        </action>
+        <!--购物车 此次不放问数据库 仅存于session中-->
+        <action name="cart_*" method="{1}" class="com.qgyshop.acition.user.CartAction">
+            <result name="myCart">/WEB-INF/userjsp/cart.jsp</result>
+            <result name="addCart">/WEB-INF/userjsp/cart.jsp</result>
+            <result name="clearCart">/WEB-INF/userjsp/cart.jsp</result>
+        </action>
+        <!--订单-->
+
+        <action name="order_*" class="com.qgyshop.acition.user.OrderAction" method="{1}">
+            <result name="saveOrder">/WEB-INF/userjsp/order.jsp</result>
+            <result name="payOrder">/WEB-INF/userjsp/order.jsp</result>
+            <result name="input" type="redirectAction" >
+                <param name="actionName">cart_myCart</param>
+                <param name="msg">${msg}</param>
+            </result>
+            <result name="toLogin" type="redirectAction">
+                <param name="actionName">user_loginPage</param>
+                <param name="msg">${msg}</param>
+            </result>
+            <result name="findByUid">/WEB-INF/userjsp/orderList.jsp</result>
+            <result name="msg">/WEB-INF/userjsp/msg.jsp</result>
+        </action>
+        <!--支付-->
+
+    </package>
+</struts>

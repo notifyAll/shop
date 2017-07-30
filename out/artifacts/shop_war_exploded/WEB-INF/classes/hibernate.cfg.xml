@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <property name="connection.url">jdbc:mysql://localhost:3307/shop</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">123456</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+
+        <!--<property name="hibernate.c3p0.max_size">20</property>-->
+        <!--<property name="hibernate.c3p0.min_size">5</property>-->
+        <!--<property name="hibernate.c3p0.timeout">60</property>-->
+        <!--&lt;!&ndash;JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements-->
+<!--属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。-->
+<!--如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default: 0&ndash;&gt;-->
+        <!--<property name="hibernate.c3p0.max_statements">100</property>-->
+        <!--方言-->
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <mapping class="com.qgyshop.domain.Adminuser"/>
+        <mapping resource="com/qgyshop/domain/Adminuser.hbm.xml"/>
+        <mapping class="com.qgyshop.domain.Category"/>
+        <mapping resource="com/qgyshop/domain/Category.hbm.xml"/>
+        <mapping class="com.qgyshop.domain.Categorysecond"/>
+        <mapping resource="com/qgyshop/domain/Categorysecond.hbm.xml"/>
+        <mapping class="com.qgyshop.domain.Orderitem"/>
+        <mapping resource="com/qgyshop/domain/Orderitem.hbm.xml"/>
+        <mapping resource="com/qgyshop/domain/Orders.hbm.xml"/>
+        <mapping class="com.qgyshop.domain.Orders"/>
+        <mapping class="com.qgyshop.domain.Product"/>
+        <mapping resource="com/qgyshop/domain/Product.hbm.xml"/>
+        <mapping class="com.qgyshop.domain.User"/>
+        <mapping resource="com/qgyshop/domain/User.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>
